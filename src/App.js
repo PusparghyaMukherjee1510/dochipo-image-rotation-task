@@ -1,23 +1,4 @@
 
-// import './App.css';
-// // import './index.css'
-// // import DisPlay from './DisPlay';
-// import NewRotate from './NewRotate';
-
-// function App() {
-//   return (
-    
-//     <div className="App">
-      
-//       {/* <DisPlay/> */}
-//       {/* <NewRotate/> */}
-      
-//     </div>
-//   );
-// }
-
-// export default App;
-
 
 import React, { useState, useRef } from "react";
 import './App.css';
