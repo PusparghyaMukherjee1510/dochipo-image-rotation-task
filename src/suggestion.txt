@@ -1,0 +1,123 @@
+//rotation handle
+<div class="ui-rotatable-handle" unselectable="on" 
+style="user-select: none; position: 
+absolute; opacity: 1;"></div>
+
+//angle show
+<div class="rotate-angle" 
+style="transform: rotateZ(0deg);">
+0
+<sup>°</sup></div>
+
+<div class="media-player" 
+click-outside="disableMediaPreview();" outside-if-not="video-container, custom-tooltip.play">
+                                <div class="video-container"></div>
+                            </div>
+
+//dragged media
+<div class="dhp-widget-tool ui-rotatable ui-draggable ui-draggable-handle ui-rotatable-rotated ui-resizable" style="display: block; 
+transform: rotate(0deg); width: 53.75px; left: 98px; height: 53.75px; 
+top: 123px;" data-widget="SHAPE" data-widget-id="dhp-widget-vRQhiyvbbhis">
+                <div class="rotate-angle" style="transform: rotateZ(0deg);">0<sup>°</sup></div>
+                        <div class="ui-rotatable-handle" unselectable="on" style="user-select: none; 
+                        position: absolute; opacity: 1;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90; 
+                        cursor: url(&quot;../web/images/45.png&quot;) 15 15, auto;"></div>
+                        <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" 
+                        style="z-index: 90; cursor: url(&quot;../web/images/135.png&quot;) 15 15, auto;"></div>
+                        <div class="ui-resizable-handle ui-resizable-sw" 
+                        style="z-index: 90; cursor: url(&quot;../web/images/45.png&quot;) 15 15, auto;"></div>
+                        <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; 
+                        cursor: url(&quot;../web/images/135.png&quot;) 15 15, auto;"></div></div>
+
+
+
+
+
+
+
+//from codepen with 2 btns
+class RotateIMG extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      rotation: 0
+    }
+    
+    this.rotate = this.rotate.bind(this);
+    this.rotateleft = this.rotateleft.bind(this);
+  }
+  
+  rotate(){
+    let newRotation = this.state.rotation + 10;
+    if(newRotation >= 360){
+      newRotation =- 360;
+    }
+    this.setState({
+      rotation: newRotation,
+    })
+  }
+  
+  rotateleft(){
+    let newRotation = this.state.rotation - 10;
+    if(newRotation >= 360){
+      newRotation =- 360;
+    }
+    this.setState({
+      rotation: newRotation,
+    })
+  }
+  
+  render(){
+    const { rotation } =  this.state;
+    return <div><input onClick={this.rotateleft} type="button" value="left" />
+      <img style={{transform: `rotate(${rotation}deg)`}} src={this.props.src} width="400" /><input onClick={this.rotate} type="button" value="right" />
+      
+    </div>
+  }
+};
+
+class ImageUpload extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {file: '',imagePreviewUrl: ''};
+  }
+
+  _handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
+
+  render() {
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<RotateIMG src={imagePreviewUrl} />);
+    } else {
+      $imagePreview = (<div className="previewText"></div>);
+    }
+
+    return (
+      <div className="previewComponent">
+        <form onSubmit={(e)=>this._handleSubmit(e)}>
+          <input className="fileInput" 
+            type="file" 
+            onChange={(e)=>this._handleImageChange(e)} />
+        </form>
+        <div className="imgPreview">
+          {$imagePreview}
+        </div>
+      </div>
+    )
+  }
+}

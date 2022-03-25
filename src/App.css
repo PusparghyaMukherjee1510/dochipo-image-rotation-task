@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+}
+
+.box {
+  width: 150px;
+  height: 100px;
+  position: relative;
+  background-color: #4be091;
+  border-radius: 6px;
+}
+
+.rotation-handle {
+  padding: 3px 4px;
+  display: table;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: -35px;
+  background-color: #ff1661;
+  border-radius: 10rem;
+  line-height: 1;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  cursor: move;
+}
